@@ -2,7 +2,7 @@
 
 
 
-Track your daily habits via Telegram and see your progress on a web dashboard.
+Track one habit per day and get AI-powered motivational messages.
 
 
 
@@ -14,37 +14,43 @@ Track your daily habits via Telegram and see your progress on a web dashboard.
 
 \## Product context
 
-\- \*\*End users:\*\* People who want to build consistent habits
+\- \*\*End user:\*\* One person tracking a single habit
 
-\- \*\*Problem:\*\* Forgetting to track habits, no visual motivation
+\- \*\*Problem:\*\* No motivation to stay consistent
 
-\- \*\*Solution:\*\* Telegram bot + web dashboard with charts
+\- \*\*Solution:\*\* Web dashboard + AI encouragement
+
+
+
+\## AI Integration
+
+When you mark a habit as done, LLM generates a motivational message based on your current streak.
 
 
 
 \## Features
 
-\- \[x] Mark habit as done via Telegram
+\- \[x] Mark habit as done
 
-\- \[x] Web dashboard with weekly chart
+\- \[x] Streak counter
 
-\- \[x] PostgreSQL storage
+\- \[x] 7-day chart
 
-\- \[ ] Reminders
+\- \[x] AI motivational messages
 
-\- \[ ] CSV export
+\- \[ ] Telegram bot (V2)
 
 
 
 \## Usage
 
-1\. Start bot: `/start`
+1\. Open web dashboard: `http://<vm-ip>:42002`
 
-2\. Add habit: `/add habit\_name`
+2\. Click "Mark done" button
 
-3\. Check habit: `/check habit\_name`
+3\. Read AI encouragement message
 
-4\. View dashboard: `http://<vm-ip>:42002`
+4\. View streak and chart
 
 
 
