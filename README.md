@@ -1,60 +1,37 @@
-\# HabitFlow
+# HabitFlow
 
+**One habit at a time. Become unstoppable.**
 
+## Demo
+![HabitFlow Screenshot](screenshot.png)
 
-Track one habit per day and get AI-powered motivational messages.
+## Product Context
+- **End users:** People who want to build consistent daily habits
+- **Problem:** Hard to stay motivated without tracking and encouragement
+- **Solution:** Web dashboard + streak tracking + AI-powered motivation
 
+## Features
+-  Mark habit as done daily
+-  Streak counter
+-  7-day history chart
+-  AI-generated motivational quotes
+-  Mobile app (planned)
+-  Multiple habits (planned)
 
+## Usage
+1. Open `http://<vm-ip>:42002`
+2. Click **"Mark done for today"**
+3. Watch your streak grow
+4. Get motivated by epic quotes
 
-\## Demo
+## Deployment
 
-\[Screenshots here]
+### Requirements
+- Ubuntu 24.04
+- Docker & Docker Compose
 
-
-
-\## Product context
-
-\- \*\*End user:\*\* One person tracking a single habit
-
-\- \*\*Problem:\*\* No motivation to stay consistent
-
-\- \*\*Solution:\*\* Web dashboard + AI encouragement
-
-
-
-\## AI Integration
-
-When you mark a habit as done, LLM generates a motivational message based on your current streak.
-
-
-
-\## Features
-
-\- \[x] Mark habit as done
-
-\- \[x] Streak counter
-
-\- \[x] 7-day chart
-
-\- \[x] AI motivational messages
-
-\- \[ ] Telegram bot (V2)
-
-
-
-\## Usage
-
-1\. Open web dashboard: `http://<vm-ip>:42002`
-
-2\. Click "Mark done" button
-
-3\. Read AI encouragement message
-
-4\. View streak and chart
-
-
-
-\## Deployment
-
-See `docker-compose.yml`
-
+### Steps
+```bash
+git clone https://github.com/inseeee/se-toolkit-hackathon.git
+cd se-toolkit-hackathon
+docker compose up --build -d
