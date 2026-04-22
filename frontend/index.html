@@ -184,10 +184,10 @@
 
         async function updateUI() {
             try {
-                const streakRes = await fetch(`http://http://10.93.26.90:8000/streak?habit=${habit}`);
+                const streakRes = await fetch(`http://10.93.26.90:8000/streak?habit=${habit}`);
                 const streak = await streakRes.json();
                 document.getElementById("streak").innerText = streak.streak;
-                const historyRes = await fetch(`http://http://10.93.26.90:8000/history?habit=${habit}`);
+                const historyRes = await fetch(`http://10.93.26.90:8000/history?habit=${habit}`);
                 const history = await historyRes.json();
                 const labels = history.map(d => d.date.slice(5));
                 const data = history.map(d => d.completed);
@@ -203,7 +203,7 @@
 
         document.getElementById("markBtn").onclick = async () => {
             const today = new Date().toISOString().slice(0,10);
-            await fetch("http://http://10.93.26.90:8000/mark", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ habit, date: today }) });
+            await fetch("http://10.93.26.90:8000/mark", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ habit, date: today }) });
             document.getElementById("message").innerHTML = "💥 EPIC! HABIT CRUSHED! 💥";
             setTimeout(() => { document.getElementById("message").innerHTML = "⚔️ ONE MORE DAY. ONE STEP CLOSER TO GREATNESS."; }, 2500);
             updateUI();
