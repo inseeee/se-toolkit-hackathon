@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import date, timedelta
 from sqlalchemy import create_engine, Column, String, Date, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import httpx
 import os
 
 app = FastAPI()
@@ -33,16 +34,46 @@ class MarkRequest(BaseModel):
     habit: str
     date: str
 
+# AI Motivation endpoint
+QWEN_API_URL = os.getenv("QWEN_API_URL", "http://localhost:42005/v1/chat/completions")
+QWEN_API_KEY = os.getenv("QWEN_API_KEY", "my-secret-qwen-key")
+
+@app.get("/motivation")
+async def get_motivation():
+    try:
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                QWEN_API_URL,
+                headers={"Authorization": f"Bearer {QWEN_API_KEY}"},
+                json={
+                    "model": "coder-model",
+                    "messages": [
+                        {"role": "system", "content": "You are a motivational coach. Give ONE short, powerful sentence (max 10 words) to encourage someone building a daily habit."},
+                        {"role": "user", "content": "Give me a motivational quote for habit tracking"}
+                    ],
+                    "temperature": 0.8,
+                    "max_tokens": 50
+                },
+                timeout=10
+            )
+            if response.status_code == 200:
+                data = response.json()
+                message = data["choices"][0]["message"]["content"].strip()
+                return {"quote": message}
+            else:
+                return {"quote": "💪 Keep going! Every day counts."}
+    except Exception as e:
+        print(f"AI error: {e}")
+        return {"quote": "🔥 Stay consistent! You've got this."}
+
 @app.get("/streak")
 def get_streak(habit: str):
     session = SessionLocal()
     today = date.today()
     streak = 0
-    # Сначала проверяем, отмечен ли сегодняшний день
     today_entry = session.query(HabitEntry).filter_by(id=habit, date=today).first()
     if today_entry and today_entry.completed:
         streak = 1
-        # Затем считаем последовательные дни до сегодня
         for i in range(1, 100):
             check_date = today - timedelta(days=i)
             entry = session.query(HabitEntry).filter_by(id=habit, date=check_date).first()
@@ -69,7 +100,7 @@ def get_history(habit: str):
 @app.post("/mark")
 def mark(request: MarkRequest):
     session = SessionLocal()
-    d = date.fromisoformat(request.date) if request.date else date.today()
+    d = date.fromisoformat(request.date)
     entry = session.query(HabitEntry).filter_by(id=request.habit, date=d).first()
     if entry:
         entry.completed = True
@@ -78,4 +109,4 @@ def mark(request: MarkRequest):
         session.add(entry)
     session.commit()
     session.close()
-    return {"status": "ok", "date": d.isoformat()}
+    return {"status": "ok"}
