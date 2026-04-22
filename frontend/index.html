@@ -145,7 +145,7 @@
 
         async function fetchMotivation() {
             try {
-                const res = await fetch("http://http://10.93.26.90:8000/motivation");
+                const res = await fetch("http://10.93.26.90:8000/motivation");
                 const data = await res.json();
                 return data.quote;
             } catch (error) {
